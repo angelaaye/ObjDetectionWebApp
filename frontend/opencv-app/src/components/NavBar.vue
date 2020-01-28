@@ -13,6 +13,7 @@
 
       <!-- Right aligned nav items -->
       <b-navbar-nav class="ml-auto">
+        <b-nav-item v-on:click="testfunc()">TestFunc</b-nav-item>
         <b-nav-item v-if="!loggedin" to="/login">Log In</b-nav-item>
         <b-nav-item  v-if="!loggedin" to="/register">Register</b-nav-item>
         <b-nav-item  v-if="loggedin" to="/about">Sign Out</b-nav-item>
@@ -23,14 +24,21 @@
 </template>>
 
 <script>
-import global_ from '@/components/Global.vue'
 
 export default {
   name: 'NavBar',
   data: function () {
-  return {
-    loggedin: global_.hasLoggedIn
+    return {
+      loginStatus: this.LOGINSTATUS
+    }
+  },
+  computed: {
+    loggedin: function () {return this.loginStatus.hasLoggedIn}
+  },
+  methods: {
+    testfunc: function () {
+      this.LOGINSTATUS.hasLoggedIn = !this.LOGINSTATUS.hasLoggedIn;      
+    }
   }
-}
 }
 </script>

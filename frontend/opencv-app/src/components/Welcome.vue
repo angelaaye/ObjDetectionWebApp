@@ -23,15 +23,17 @@
 </template>
 
 <script>
-import global_ from '@/components/Global.vue'
 
 export default {
   name: 'Welcome',
   data: function () {
-  return {
-    loggedin: global_.hasLoggedIn
+    return {
+      loginStatus: this.LOGINSTATUS
+    }
+  },
+  computed: {
+    loggedin: function () {return this.loginStatus.hasLoggedIn}
   }
-}
 }
 </script>
 

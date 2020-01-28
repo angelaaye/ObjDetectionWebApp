@@ -1,6 +1,7 @@
 <script>
-const token='12345678';
-const hasLoggedIn=false;
+let token='12345678';
+let hasLoggedIn=false;
+
   export default
   {
     token,//用户token身份

@@ -1,7 +1,9 @@
 <template>
   <div >
       <h1>Log In</h1>
+      
     <b-form id="loginform" @submit="onSubmit" @reset="onReset" v-if="show">
+      <b-alert v-if="error" show variant="danger">{{error_msg}}</b-alert>
       <b-form-group
         id="input-group-1"
         label="User name:"
@@ -10,7 +12,7 @@
         <b-form-input
           id="input-1"
           v-model="form.username"
-          type="string"
+          type="text"
           required
           placeholder="Enter user name"
         ></b-form-input>
@@ -43,7 +45,9 @@
           username: '',
           password: '',
         },
-        show: true
+        show: true,
+        error: false,
+        error_msg: "Test error msg"
       }
     },
     methods: {
