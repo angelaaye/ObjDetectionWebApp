@@ -28,7 +28,6 @@
     color: #8c939d;
     min-width: 178px;
     min-height: 178px;
-    width: 100vw;
     line-height: 178px;
     text-align: center;
   }
