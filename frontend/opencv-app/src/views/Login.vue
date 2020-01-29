@@ -1,82 +1,85 @@
 <template>
-  <div >
-      <h1>Log In</h1>
-      
-    <b-form id="loginform" @submit="onSubmit" @reset="onReset" v-if="show">
-      <b-alert v-if="error" show variant="danger">{{error_msg}}</b-alert>
-      <b-form-group
-        id="input-group-1"
-        label="User name:"
-        label-for="input-1"
-      >
-        <b-form-input
-          id="input-1"
-          v-model="form.username"
-          type="text"
-          required
-          placeholder="Enter user name"
-        ></b-form-input>
-      </b-form-group>
-
-      <b-form-group id="input-group-2" label="Your Password:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.password"
-          type="password"
-          required
-          placeholder="Enter password"
-        ></b-form-input>
-      </b-form-group>
-
-      <b-button class="bbutton" type="submit" variant="primary">Log In</b-button>
-      <b-button class="bbutton" type="reset" variant="danger">Reset</b-button>
-    </b-form>
-    <b-card class="mt-3" header="Form Data Result">
-      <pre class="m-0">{{ form }}</pre>
-    </b-card>
-  </div>
+<div class="logindiv">
+  <el-page-header id="pageheader" @back="$router.go(-1)" content="Log In">
+  </el-page-header>
+  <hr>
+<el-form :model="loginform" status-icon :rules="rules" ref="loginform" label-width="100px" class="loginform">
+  <el-form-item label="Username" prop="username">
+    <el-input type="text" v-model="loginform.username" autocomplete="off"></el-input>
+  </el-form-item>
+  <el-form-item label="Password" prop="password">
+    <el-input type="password" v-model="loginform.password" autocomplete="off"></el-input>
+  </el-form-item>
+  <el-form-item>
+    <el-button type="primary" @click="submitForm('loginform')">Log In</el-button>
+    <el-button @click="resetForm('loginform')">Reset</el-button>
+  </el-form-item>
+</el-form>
+</div>
 </template>
-
 <script>
   export default {
     data() {
+       var validateName = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('Please enter unsername.'));
+        } else {
+          callback();
+        }
+      };
+       var validatePass = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('Please enter password.'));
+        } else {
+          callback();
+        }
+      };
       return {
-        form: {
+        loginform: {
           username: '',
-          password: '',
+          password: ''
         },
-        show: true,
-        error: false,
-        error_msg: "Test error msg"
-      }
+        rules: {
+          username: [
+            { validator: validateName, trigger: 'blur' }
+          ],
+          password: [
+            { validator: validatePass, trigger: 'blur' }
+          ]
+        }
+      };
     },
     methods: {
-      onSubmit(evt) {
-        evt.preventDefault()
-        alert(JSON.stringify(this.form))
+      submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.$message.success("Submitted!");
+          } else {
+            window.console.log('error submit!!');
+            return false;
+          }
+        });
       },
-      onReset(evt) {
-        evt.preventDefault()
-        // Reset our form values
-        this.form.username = ''
-        this.form.password = ''
+      resetForm(formName) {
+        this.$refs[formName].resetFields();
       }
     }
   }
 </script>
 
 <style scoped>
-h1 {
-    margin: 3rem;
+#pageheader {
+  padding: 18px;
 }
 
-.bbutton {
-    margin: 0.25rem
+.loginform {
+  margin: auto;
+  padding-right: 18px;
 }
 
-#loginform {
-    margin:auto;
-    padding: 2rem;
-    max-width: 35rem;
+.logindiv {
+  padding: 1rem;
+  max-width: 35rem;
+  margin: auto;
 }
 </style>

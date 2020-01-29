@@ -1,17 +1,18 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 import loginStatus from '@/components/LoginStatus.vue'
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+import 'element-ui/lib/theme-chalk/display.css';
+import locale from 'element-ui/lib/locale/lang/en'
 
-
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
+import '@/assets/global.css'
 
 Vue.config.productionTip = false
 
-Vue.use(BootstrapVue)
-Vue.use(BootstrapVueIcons)
+Vue.use(ElementUI, { locale })
+
 Vue.prototype.LOGINSTATUS = loginStatus
 
 

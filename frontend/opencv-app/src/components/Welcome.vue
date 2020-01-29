@@ -1,24 +1,25 @@
 <template>
-<div>
-  <b-jumbotron id="jbt">
-    <template v-slot:header>OpenCV App</template>
+<div id="welcomediv">
+    <h1>OpenCV App</h1>
 
-    <template v-slot:lead>
+    <br>
+
+    <p>
       This an assignment website for ECE1779 using Python Flask and OpenCV.
-    </template>
+    </p>
 
-    <hr class="my-4">
+    <hr>
 
     <p>
       Written by: Angela, Chad, Feilong.
     </p>
+    <br>
 
-    <b-button class="bbutton" v-if="loggedin" variant="primary" to="/photo">Photo List</b-button>
-    <b-button class="bbutton" v-if="!loggedin" variant="success" to="/login">Log In</b-button>
-    <b-button class="bbutton" v-if="!loggedin" variant="info" to="/register">Register</b-button>
+    <el-button type="primary" v-if="loggedin" @click="$router.push('login')">Upload</el-button>
+    <el-button v-if="loggedin" @click="$router.push('login')">Results</el-button>
+    <el-button type="primary" v-if="!loggedin" @click="$router.push('login')">Log In</el-button>
+    <el-button v-if="!loggedin" @click="$router.push('register')">Register</el-button>
 
-
-  </b-jumbotron>
 </div>
 </template>
 
@@ -38,12 +39,9 @@ export default {
 </script>
 
 <style scoped>
-.bbutton {
-  margin: 0.25rem;
-}
-
-#jbt {
-  height: 90vh;
-  padding-top: 25vh;
+#welcomediv {
+  max-width: 1000px;
+  margin: auto;
+  padding: 28px;
 }
 </style>>
