@@ -17,8 +17,8 @@
       <el-row class="hidden-md-and-up">
         <el-submenu>
           <template slot="title"><i class="el-icon-menu"></i></template>
-          <el-menu-item v-if="!loggedin" index="/">Upload</el-menu-item>
-          <el-menu-item v-if="!loggedin" index="/">Results</el-menu-item>
+          <el-menu-item v-if="loggedin" index="/upload">Upload</el-menu-item>
+          <el-menu-item v-if="loggedin" index="/">Results</el-menu-item>
           <el-menu-item @click="testfunc()">FrontEndTestLogin</el-menu-item>
           <el-menu-item v-if="!loggedin" index="/login">Log In</el-menu-item>
           <el-menu-item v-if="!loggedin" index="/register">Register</el-menu-item>
@@ -28,8 +28,8 @@
       <el-row class='hidden-sm-and-down' type="flex" justify="space-between">
         <el-col :span=8>
           <el-row type="flex">
-             <el-menu-item v-if="!loggedin" index="/">Upload</el-menu-item>
-             <el-menu-item v-if="!loggedin" index="/">Results</el-menu-item>
+             <el-menu-item v-if="loggedin" index="/upload">Upload</el-menu-item>
+             <el-menu-item v-if="loggedin" index="/">Results</el-menu-item>
           </el-row>
         </el-col>
 

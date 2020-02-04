@@ -29,9 +29,9 @@ const routes = [
     component: () => import(/* webpackChunkName: "register" */ '../views/Register.vue')
   },
   {
-    path: '/photo',
-    name: 'photo',
-    component: () => import(/* webpackChunkName: "register" */ '../views/Register.vue')
+    path: '/upload',
+    name: 'upload',
+    component: () => import(/* webpackChunkName: "register" */ '../views/Upload.vue')
   }
 ]
 
