@@ -32,6 +32,16 @@ const routes = [
     path: '/upload',
     name: 'upload',
     component: () => import(/* webpackChunkName: "register" */ '../views/Upload.vue')
+  },
+  {
+    path: '/result',
+    name: 'result',
+    component: () => import('../views/Thumbnails.vue')
+  },
+  {
+    path: '/view/:id',
+    component: () => import('../views/View.vue'),
+    props: true
   }
 ]
 
