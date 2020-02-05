@@ -19,10 +19,9 @@
           <template slot="title"><i class="el-icon-menu"></i></template>
           <el-menu-item v-if="loggedin" index="/upload">Upload</el-menu-item>
           <el-menu-item v-if="loggedin" index="/result">Results</el-menu-item>
-          <el-menu-item @click="testfunc()">FrontEndTestLogin</el-menu-item>
           <el-menu-item v-if="!loggedin" index="/login">Log In</el-menu-item>
           <el-menu-item v-if="!loggedin" index="/register">Register</el-menu-item>
-          <el-menu-item v-if="loggedin" index="/about">Sign Out</el-menu-item>
+          <el-menu-item v-if="loggedin" @click="onSignOut()">Sign Out</el-menu-item>
         </el-submenu>
       </el-row>
       <el-row class='hidden-sm-and-down' type="flex" justify="space-between">
@@ -33,13 +32,11 @@
           </el-row>
         </el-col>
 
-        <el-col :span=8>
+        <el-col :md={span:5} :lg={span:3}>
           <el-row type="flex" justify="space-between">
-            <el-menu-item @click="testfunc()">FrontEndTestLogin</el-menu-item>
-            <el-menu-item index="/about">TestPage</el-menu-item>
             <el-menu-item v-if="!loggedin" index="/login">Log In</el-menu-item>
             <el-menu-item v-if="!loggedin" index="/register">Register</el-menu-item>
-            <el-menu-item v-if="loggedin" index="/about">Sign Out</el-menu-item>
+            <el-menu-item v-if="loggedin" @click="onSignOut()">Sign Out</el-menu-item>
           </el-row>
         </el-col>
         
@@ -58,12 +55,34 @@ export default {
       loginStatus: this.LOGINSTATUS
     }
   },
+  mounted() {
+    // After mounted, check if cookie exists and restore login status.
+    this.LOGINSTATUS.access_token = this.$cookie.get('access_token');
+    this.LOGINSTATUS.refresh_token = this.$cookie.get('refresh_token');
+
+    if (this.LOGINSTATUS.access_token) {
+      this.LOGINSTATUS.hasLoggedIn = true;
+    }
+  },
   computed: {
     loggedin: function () {return this.loginStatus.hasLoggedIn}
   },
   methods: {
     testfunc: function () {
       this.LOGINSTATUS.hasLoggedIn = !this.LOGINSTATUS.hasLoggedIn;      
+    },
+
+    onSignOut: function () {
+      window.console.log(this);
+      this.LOGINSTATUS.hasLoggedIn = false;
+      this.LOGINSTATUS.access_token = null;
+      this.LOGINSTATUS.refresh_token = null;
+
+      this.$cookie.delete('access_token');
+      this.$cookie.delete('refresh_token');
+
+      this.$message.success("Log out successfully.");
+      setTimeout(function() {window.location.href = "/"}, 1000);
     }
   }
 }

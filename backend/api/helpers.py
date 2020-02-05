@@ -19,7 +19,7 @@ from api.yolo import yolo_object_detection
 def authenticate_user(username, password):
     print("Querying user tied to username and password")
     user = User.query.filter_by(username=username).first()
-    if username and pbkdf2_sha256.verify(password, user.password):
+    if user and pbkdf2_sha256.verify(password, user.password):
         return user
     else:
         return None

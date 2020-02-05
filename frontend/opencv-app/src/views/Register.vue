@@ -18,6 +18,8 @@
 </div>
 </template>
 <script>
+  import axios from 'axios';
+
   export default {
     data() {
        var validateName = (rule, value, callback) => {
@@ -53,9 +55,30 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            this.$message.success("Submitted!");
+            // Valid front-end data
+            let formData = new FormData();
+            formData.set('id', -1);
+            formData.set('username', this.loginform.username);
+            formData.set('password', this.loginform.password);
+
+            axios({
+              method: 'POST',
+              url: "http://localhost:5000/api/user/register",
+              data: formData,
+              headers: {'Content-Type': 'multipart/form-data'}
+            })
+            .then((response) => {
+              if (response.status == 200) {
+                this.$message.success("Register success!");
+              }
+              window.console.log(response);
+            })
+            .catch((error) => {
+              this.$message.error("Error: " + error.status);
+              window.console.log(error);
+            })
           } else {
-            window.console.log('error submit!!');
+            this.$message.success("Error! Please validate your input!");
             return false;
           }
         });
