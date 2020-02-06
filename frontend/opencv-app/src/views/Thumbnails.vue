@@ -6,7 +6,7 @@
         <EIImageViewer 
                 v-if="showViewer" 
                 :on-close="closeViewer" 
-                :url-list="srcList" />
+                :url-list="compViewerSrc()" />
         <div class="box" v-for="imgsrc in srcList" v-bind:key="imgsrc">
             <div class="pic"><img :src="compThumbSrc(imgsrc)" :alt="imgsrc" @click="onPreview(imgsrc)"></div>
         </div>
@@ -60,7 +60,7 @@ export default {
         showViewer: false,
         url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
         srcList: [
-          'https://fuss10.elemecdn.com/8/27/f01c15bb73e1ef3793e64e6b7bbccjpeg.jpeg',
+          'http://localhost:5000/api/photo/thumbnail/1',
           'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
           'https://fuss10.elemecdn.com/8/27/f01c15bb73e1ef3793e64e6b7bbccjpeg.jpeg',
           'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
@@ -79,12 +79,7 @@ export default {
       }
     },
     computed: {
-        viewerSrc: function () {
-            return [
-                'https://fuss10.elemecdn.com/8/27/f01c15bb73e1ef3793e64e6b7bbccjpeg.jpeg',
-                'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
-            ]
-        }
+        
     },
     methods: {
         onPreview(id) {
@@ -101,7 +96,7 @@ export default {
         compViewerSrc(id) {
             id;
             return [
-                'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+                'http://localhost:5000/api/photo/1/original',
                 'https://fuss10.elemecdn.com/8/27/f01c15bb73e1ef3793e64e6b7bbccjpeg.jpeg'
             ]
         }

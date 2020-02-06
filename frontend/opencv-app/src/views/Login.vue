@@ -64,7 +64,8 @@
               method: 'POST',
               url: "http://localhost:5000/api/user/login",
               data: formData,
-              headers: {'Content-Type': 'multipart/form-data'}
+              headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+              withCredentials: true
             })
             .then((response) => {
               if (response.status == 200) {
@@ -72,10 +73,6 @@
 
                 // Set global variables and save to cookies
                 this.LOGINSTATUS.hasLoggedIn = true;
-                this.LOGINSTATUS.access_token = response.data.access_token;
-                this.LOGINSTATUS.refresh_token = response.data.refresh_token;
-                this.$cookie.set('access_token', this.LOGINSTATUS.access_token, '1d');
-                this.$cookie.set('refresh_token', this.LOGINSTATUS.refresh_token, '1d');
 
                 setTimeout(function() {window.location.href = "/"}, 1000);
               }

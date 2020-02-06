@@ -1,7 +1,7 @@
 from flask import request, jsonify, send_file
 from flask_restplus import Resource, reqparse, abort
 from api.restplus import api
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 from api.parsers import user_info, photo_upload, photo_info
 from api.helpers import upload_photo, process_photo
@@ -13,28 +13,30 @@ from config import config
 
 ns = api.namespace('photo', description='APIs related to ECE1779A1 photo upload/view')
 
-@ns.route('/<int:user_id>')
+@ns.route('/')
 class ThumbnailPhotos(Resource):
     @jwt_required
     @api.marshal_with(photo_json)
-    def get(self, user_id):
+    def get(self):
         """
         Return uploaded photos as thumbnails from access token
         """
-        photos = Photo.query.filter_by(user_id=user_id).all()
+        current_user = get_jwt_identity()
+        photos = Photo.query.filter_by(user_id=current_user).all()
         return photos
 
     @jwt_required
     @api.expect(photo_upload)
     @api.marshal_with(photo_json)
-    def post(self, user_id):
+    def post(self):
         """
         Upload a new photo
         """
         args = photo_upload.parse_args(request)
+        current_user = get_jwt_identity()
         if not args['photo'].filename: 
             abort(401, 'No image selected')
-        photo = upload_photo(id, args['photo'])
+        photo = upload_photo(current_user, args['photo'])
         if not photo:
             abort(401, 'Wrong file type. JPEG/JPG/PNG only!')
         return photo

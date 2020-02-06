@@ -48,6 +48,8 @@
 
 
 <script>
+import axios from "axios";
+
 export default {
   name: 'NavBar',
   data: function () {
@@ -57,10 +59,7 @@ export default {
   },
   mounted() {
     // After mounted, check if cookie exists and restore login status.
-    this.LOGINSTATUS.access_token = this.$cookie.get('access_token');
-    this.LOGINSTATUS.refresh_token = this.$cookie.get('refresh_token');
-
-    if (this.LOGINSTATUS.access_token) {
+    if (this.$cookie.get('csrf_access_token')) {
       this.LOGINSTATUS.hasLoggedIn = true;
     }
   },
@@ -73,16 +72,23 @@ export default {
     },
 
     onSignOut: function () {
-      window.console.log(this);
-      this.LOGINSTATUS.hasLoggedIn = false;
-      this.LOGINSTATUS.access_token = null;
-      this.LOGINSTATUS.refresh_token = null;
+      axios({
+              method: 'GET',
+              url: "http://localhost:5000/api/user/logout",
+              withCredentials: true
+            })
+            .then((response) => {
+              if (response.status == 200) {
+                this.$message.success("Log out successfully.");
+                this.LOGINSTATUS.hasLoggedIn = false;
 
-      this.$cookie.delete('access_token');
-      this.$cookie.delete('refresh_token');
-
-      this.$message.success("Log out successfully.");
-      setTimeout(function() {window.location.href = "/"}, 1000);
+                setTimeout(function() {window.location.href = "/"}, 1000);
+              }
+              window.console.log(response);
+            })
+            .catch((error) => {
+              window.console.log(error);
+            })
     }
   }
 }
