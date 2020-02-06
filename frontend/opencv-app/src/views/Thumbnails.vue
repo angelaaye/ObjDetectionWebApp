@@ -2,19 +2,18 @@
 <div id="waterfall-wrapper">
     <el-page-header id="pageheader" @back="$router.go(-1)" content="View Results">
     </el-page-header>
+    <el-row v-loading="isLoading">
     <div class="waterfalls">
-        <EIImageViewer 
+        <EIImageViewer ref="imgviewer"
                 v-if="showViewer" 
                 :on-close="closeViewer" 
-<<<<<<< HEAD
-                :url-list="srcList" />
-=======
                 :url-list="compViewerSrc()" />
->>>>>>> c126eacecbe3a9569f7b9ada358491c72be82f2a
         <div class="box" v-for="imgsrc in srcList" v-bind:key="imgsrc">
             <div class="pic"><img :src="compThumbSrc(imgsrc)" :alt="imgsrc" @click="onPreview(imgsrc)"></div>
         </div>
     </div>
+    </el-row>
+
 </div>
 </template>
 
@@ -52,6 +51,7 @@
 
 <script>
 import EIImageViewer from 'element-ui/packages/image/src/image-viewer'
+import axios from 'axios';
 
 export default {
   name: 'thumbnaillist',
@@ -59,68 +59,56 @@ export default {
       EIImageViewer
    },
    props: [],
+   mounted() {
+        var _this = this;
+        axios({
+                method: 'GET',
+                url: "http://localhost:5000/api/photo/",
+                withCredentials: true
+            })
+            .then((response) => {
+                if (response.status == 200) {
+                    let id_list = response.data.map(photo => { return photo.id; })
+                    id_list.map(id => { _this.srcList.unshift(id) });
+                    _this.isLoading = false;
+                }
+            })
+            .catch((error) => {
+                this.$message.error("Loading image list failed, error code: " + error.status);
+                window.console.log(error);
+            })
+   },
    data() {
       return {
+        isLoading: true,
         showViewer: false,
-        url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-        srcList: [
-<<<<<<< HEAD
-          'https://fuss10.elemecdn.com/8/27/f01c15bb73e1ef3793e64e6b7bbccjpeg.jpeg',
-=======
-          'http://localhost:5000/api/photo/thumbnail/1',
->>>>>>> c126eacecbe3a9569f7b9ada358491c72be82f2a
-          'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-          'https://fuss10.elemecdn.com/8/27/f01c15bb73e1ef3793e64e6b7bbccjpeg.jpeg',
-          'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-          'https://fuss10.elemecdn.com/8/27/f01c15bb73e1ef3793e64e6b7bbccjpeg.jpeg',
-          'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-          'https://fuss10.elemecdn.com/8/27/f01c15bb73e1ef3793e64e6b7bbccjpeg.jpeg',
-          'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-          'https://fuss10.elemecdn.com/8/27/f01c15bb73e1ef3793e64e6b7bbccjpeg.jpeg',
-          'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-          'https://fuss10.elemecdn.com/8/27/f01c15bb73e1ef3793e64e6b7bbccjpeg.jpeg',
-          'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-          'https://fuss10.elemecdn.com/8/27/f01c15bb73e1ef3793e64e6b7bbccjpeg.jpeg',
-          'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
-        ],
+        srcList: [],
         viewerID: -1
       }
-    },
-    computed: {
-<<<<<<< HEAD
-        viewerSrc: function () {
-            return [
-                'https://fuss10.elemecdn.com/8/27/f01c15bb73e1ef3793e64e6b7bbccjpeg.jpeg',
-                'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
-            ]
-        }
-=======
-        
->>>>>>> c126eacecbe3a9569f7b9ada358491c72be82f2a
     },
     methods: {
         onPreview(id) {
           this.showViewer = true;
           this.viewerID = id;
+          this.$message.info("Use buttons on the sides to toggle between processed and original images.");
+        },
+        genSrcLink(type, id) {
+            return 'http://localhost:5000/api/photo/' + type + '/' + id;
         },
         closeViewer() {
           this.showViewer = false;
           this.viewerID = -1;
         },
         compThumbSrc(id) {
-            return id;
+            return this.genSrcLink('thumbnail', id);
         },
-        compViewerSrc(id) {
-            id;
+        compViewerSrc() {
             return [
-<<<<<<< HEAD
-                'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-=======
-                'http://localhost:5000/api/photo/1/original',
->>>>>>> c126eacecbe3a9569f7b9ada358491c72be82f2a
-                'https://fuss10.elemecdn.com/8/27/f01c15bb73e1ef3793e64e6b7bbccjpeg.jpeg'
+                this.genSrcLink('processed', this.viewerID),
+                this.genSrcLink('original', this.viewerID)
             ]
         }
+
     }
 }
 </script>>

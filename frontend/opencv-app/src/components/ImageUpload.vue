@@ -1,10 +1,16 @@
 <template>
 <div>
     <el-upload
+    v-loading="isUploading"
     class="avatar-uploader"
-    action="https://www.mocky.io/v2/5185415ba171ea3a00704eed/posts/"
+    action="http://localhost:5000/api/photo/"
+    name="photo"
+    with-credentials
+    :headers="{'X-CSRF-TOKEN': csrf_access_token}"
     :show-file-list="false"
+    :on-progress="handleProgress"
     :on-success="handleAvatarSuccess"
+    :on-error="handleAvatarError"
     :before-upload="beforeAvatarUpload">
     <img v-if="imageUrl" :src="imageUrl" class="avatar">
     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -42,7 +48,9 @@
   export default {
     data() {
       return {
-        imageUrl: ''
+        imageUrl: '',
+        isUploading: false,
+        csrf_access_token: this.$cookie.get('csrf_access_token')
       };
     },
     methods: {
@@ -50,21 +58,31 @@
           this.imageUrl = '';
       },
       handleAvatarSuccess(res, file) {
+        this.isUploading = false;
         this.imageUrl = URL.createObjectURL(file.raw);
-        this.$message.success('Succeed!');
+        this.$message.success('Picture uploaded and processed successfully!');
+      },
+      handleAvatarError(err) {
+        this.$message.error("Error");
+        window.console.log(err);
       },
       beforeAvatarUpload(file) {
         const isJPG = file.type === 'image/jpeg';
+        const isPNG = file.type === 'image/png';
+
         const isLt2M = file.size / 1024 / 1024 < 2;
 
-        if (!isJPG) {
-        //   this.$message.error('上传头像图片只能是 JPG 格式!');
+        if (!isJPG && !isPNG) {
+          this.$message.error('Can only upload jpg or png files!');
         }
         if (!isLt2M) {
-          this.$message.error('上传头像图片大小不能超过 2MB!');
+          this.$message.error('Cannot upload image more than 2MB!');
         }
 
-        return true && true;
+        return (isJPG || isPNG) && isLt2M;
+      },
+      handleProgress() {
+        this.isUploading = true;
       }
     }
   }

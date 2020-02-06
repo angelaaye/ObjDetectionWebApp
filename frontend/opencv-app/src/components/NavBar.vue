@@ -19,10 +19,7 @@
           <template slot="title"><i class="el-icon-menu"></i></template>
           <el-menu-item v-if="loggedin" index="/upload">Upload</el-menu-item>
           <el-menu-item v-if="loggedin" index="/result">Results</el-menu-item>
-<<<<<<< HEAD
           <el-menu-item @click="testfunc()">FrontEndTestLogin</el-menu-item>
-=======
->>>>>>> c126eacecbe3a9569f7b9ada358491c72be82f2a
           <el-menu-item v-if="!loggedin" index="/login">Log In</el-menu-item>
           <el-menu-item v-if="!loggedin" index="/register">Register</el-menu-item>
           <el-menu-item v-if="loggedin" @click="onSignOut()">Sign Out</el-menu-item>
