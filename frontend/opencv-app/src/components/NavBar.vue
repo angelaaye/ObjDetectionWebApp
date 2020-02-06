@@ -15,10 +15,10 @@
 
     <el-col :xs={span:6} :sm={span:6} :md={span:20} :lg={span:22}>
       <el-row class="hidden-md-and-up">
-        <el-submenu>
+        <el-submenu index="/">
           <template slot="title"><i class="el-icon-menu"></i></template>
           <el-menu-item v-if="loggedin" index="/upload">Upload</el-menu-item>
-          <el-menu-item v-if="loggedin" index="/">Results</el-menu-item>
+          <el-menu-item v-if="loggedin" index="/result">Results</el-menu-item>
           <el-menu-item @click="testfunc()">FrontEndTestLogin</el-menu-item>
           <el-menu-item v-if="!loggedin" index="/login">Log In</el-menu-item>
           <el-menu-item v-if="!loggedin" index="/register">Register</el-menu-item>
@@ -29,7 +29,7 @@
         <el-col :span=8>
           <el-row type="flex">
              <el-menu-item v-if="loggedin" index="/upload">Upload</el-menu-item>
-             <el-menu-item v-if="loggedin" index="/">Results</el-menu-item>
+             <el-menu-item v-if="loggedin" index="/result">Results</el-menu-item>
           </el-row>
         </el-col>
 
@@ -45,20 +45,6 @@
         
       </el-row>
     </el-col>
-    <!-- 
-    <el-col sm=6>
-      <span>
-        <el-menu-item v-if="loggedin" index="/">Upload</el-menu-item>
-        <el-menu-item v-if="loggedin" index="/">Results</el-menu-item>
-      </span>
-      <el-row>
-        <el-menu-item @click="testfunc()">FrontEndTestLogin</el-menu-item>
-        <el-menu-item index="/about">TestPage</el-menu-item>
-        <el-menu-item v-if="!loggedin" index="/login">Log In</el-menu-item>
-        <el-menu-item v-if="!loggedin" index="/register">Register</el-menu-item>
-        <el-menu-item v-if="loggedin" index="/about">Sign Out</el-menu-item>
-      </el-row>
-    </el-col> -->
 </el-row>
 </el-menu>
 </template>
