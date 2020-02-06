@@ -9,7 +9,6 @@ from api.endpoints.photo import ns as photo_namespace
 from api.restplus import api
 from database import db
 from flask_jwt_extended import JWTManager
-from flask_cors import CORS
 from flask_migrate import Migrate
 
 
@@ -17,7 +16,6 @@ def create_app():
     # Initialize and configure flask app
     app = Flask(__name__)
     app.config.update(config)
-    CORS(app, supports_credentials=True)
 
     # Initilize database and migrations
     db.init_app(app)

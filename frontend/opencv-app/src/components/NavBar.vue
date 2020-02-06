@@ -19,10 +19,13 @@
           <template slot="title"><i class="el-icon-menu"></i></template>
           <el-menu-item v-if="loggedin" index="/upload">Upload</el-menu-item>
           <el-menu-item v-if="loggedin" index="/result">Results</el-menu-item>
+<<<<<<< HEAD
           <el-menu-item @click="testfunc()">FrontEndTestLogin</el-menu-item>
+=======
+>>>>>>> c126eacecbe3a9569f7b9ada358491c72be82f2a
           <el-menu-item v-if="!loggedin" index="/login">Log In</el-menu-item>
           <el-menu-item v-if="!loggedin" index="/register">Register</el-menu-item>
-          <el-menu-item v-if="loggedin" index="/about">Sign Out</el-menu-item>
+          <el-menu-item v-if="loggedin" @click="onSignOut()">Sign Out</el-menu-item>
         </el-submenu>
       </el-row>
       <el-row class='hidden-sm-and-down' type="flex" justify="space-between">
@@ -33,13 +36,11 @@
           </el-row>
         </el-col>
 
-        <el-col :span=8>
+        <el-col :md={span:5} :lg={span:3}>
           <el-row type="flex" justify="space-between">
-            <el-menu-item @click="testfunc()">FrontEndTestLogin</el-menu-item>
-            <el-menu-item index="/about">TestPage</el-menu-item>
             <el-menu-item v-if="!loggedin" index="/login">Log In</el-menu-item>
             <el-menu-item v-if="!loggedin" index="/register">Register</el-menu-item>
-            <el-menu-item v-if="loggedin" index="/about">Sign Out</el-menu-item>
+            <el-menu-item v-if="loggedin" @click="onSignOut()">Sign Out</el-menu-item>
           </el-row>
         </el-col>
         
@@ -51,11 +52,19 @@
 
 
 <script>
+import axios from "axios";
+
 export default {
   name: 'NavBar',
   data: function () {
     return {
       loginStatus: this.LOGINSTATUS
+    }
+  },
+  mounted() {
+    // After mounted, check if cookie exists and restore login status.
+    if (this.$cookie.get('csrf_access_token')) {
+      this.LOGINSTATUS.hasLoggedIn = true;
     }
   },
   computed: {
@@ -64,6 +73,26 @@ export default {
   methods: {
     testfunc: function () {
       this.LOGINSTATUS.hasLoggedIn = !this.LOGINSTATUS.hasLoggedIn;      
+    },
+
+    onSignOut: function () {
+      axios({
+              method: 'GET',
+              url: "http://localhost:5000/api/user/logout",
+              withCredentials: true
+            })
+            .then((response) => {
+              if (response.status == 200) {
+                this.$message.success("Log out successfully.");
+                this.LOGINSTATUS.hasLoggedIn = false;
+
+                setTimeout(function() {window.location.href = "/"}, 1000);
+              }
+              window.console.log(response);
+            })
+            .catch((error) => {
+              window.console.log(error);
+            })
     }
   }
 }

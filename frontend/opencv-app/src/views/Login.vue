@@ -18,6 +18,7 @@
 </div>
 </template>
 <script>
+  import axios from 'axios';
   export default {
     data() {
        var validateName = (rule, value, callback) => {
@@ -53,7 +54,37 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            this.$message.success("Submitted!");
+           // Valid front-end data
+            let formData = new FormData();
+            formData.set('id', -1);
+            formData.set('username', this.loginform.username);
+            formData.set('password', this.loginform.password);
+
+            axios({
+              method: 'POST',
+              url: "http://localhost:5000/api/user/login",
+              data: formData,
+              headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+              withCredentials: true
+            })
+            .then((response) => {
+              if (response.status == 200) {
+                this.$message.success("Login successfully! We'll take you to home page in 1s.");
+
+                // Set global variables and save to cookies
+                this.LOGINSTATUS.hasLoggedIn = true;
+
+                setTimeout(function() {window.location.href = "/"}, 1000);
+              }
+              window.console.log(response);
+            })
+            .catch((error) => {
+              if (error.response.status == 401) {
+                this.$message.error("Error: Invalid username or password!");
+              }
+              
+              window.console.log(error);
+            })
           } else {
             window.console.log('error submit!!');
             return false;

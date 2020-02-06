@@ -19,7 +19,7 @@ from api.yolo import yolo_object_detection
 def authenticate_user(username, password):
     print("Querying user tied to username and password")
     user = User.query.filter_by(username=username).first()
-    if username and pbkdf2_sha256.verify(password, user.password):
+    if user and pbkdf2_sha256.verify(password, user.password):
         return user
     else:
         return None
@@ -58,29 +58,19 @@ def upload_photo(id, photo):
 		photo.save(os.path.join(config['UPLOAD_FOLDER'], new_filename))
 		# get thumbnail link
 		thumbnail_link = convert_to_thumbnail(new_filename)
+		processed_link = yolo_object_detection(config['UPLOAD_FOLDER'], new_filename, config['UPLOAD_FOLDER'])
 		# create new database record
 		photo = Photo(
 			user_id=id,
 			thumbnail_link=thumbnail_link,
-			photo_link=new_filename
+			photo_link=new_filename,
+			processed_link=processed_link
 		)
 		db.session.add(photo)
 		db.session.commit()
 		return photo
 	else:
 		return None
-
-def process_photo(photo_id):
-	photo = Photo.query.get(photo_id)
-	if not photo.photo_link:
-		return None
-	# if already processed the photo
-	if photo.processed_link:
-		return photo
-	processed_link = yolo_object_detection(config['UPLOAD_FOLDER'], photo.photo_link, config['UPLOAD_FOLDER'])
-	photo.processed_link = processed_link
-	db.session.commit()
-	return photo
 
 
 
