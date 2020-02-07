@@ -4,7 +4,7 @@ from api.restplus import api
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 from api.parsers import user_info, photo_upload, photo_info
-from api.helpers import upload_photo
+from api.helpers import upload_photo, auth_photo_link
 from api.serializers import photo_json
 from database.models import Photo
 
@@ -49,7 +49,7 @@ class ThumbnailLink(Resource):
         Return the thumbnail photo corresponding to photo_id as a file object 
         """
         photo = Photo.query.get(photo_id)
-        path = os.path.join(config['UPLOAD_FOLDER'], photo.thumbnail_link)
+        path = auth_photo_link(get_jwt_identity(), photo)
         return send_file(path, as_attachment=True)
 
 @ns.route('/original/<int:photo_id>')
@@ -60,7 +60,7 @@ class OriginalLink(Resource):
         Return the original photo corresponding to photo_id as a file object 
         """
         photo = Photo.query.get(photo_id)
-        path = os.path.join(config['UPLOAD_FOLDER'], photo.photo_link)
+        path = auth_photo_link(get_jwt_identity(), photo)
         return send_file(path, as_attachment=True)
 
 @ns.route('/processed/<int:photo_id>')
@@ -71,9 +71,10 @@ class ProcessedLink(Resource):
         Return the processed photo corresponding to photo_id as a file object 
         """
         photo = Photo.query.get(photo_id)
-        path = os.path.join(config['UPLOAD_FOLDER'], photo.processed_link)
+        path = auth_photo_link(get_jwt_identity(), photo)
         return send_file(path, as_attachment=True)
         
         
+
 
 

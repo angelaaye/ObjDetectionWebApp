@@ -3,4 +3,5 @@ __pycache__/*
 .DS_Store
 .env.local
 /uploads/*
+!/upload/401.jpg
 /api/yolo-coco/*

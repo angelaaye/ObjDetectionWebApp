@@ -73,4 +73,9 @@ def upload_photo(id, photo):
 		return None
 
 
-
+def auth_photo_link(user, photo):
+    print(user, photo)
+    if user == photo.user_id:
+        return os.path.join(config['UPLOAD_FOLDER'], photo.processed_link)
+    else:
+        return os.path.join(config['UPLOAD_FOLDER'], '401.jpg')
