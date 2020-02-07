@@ -56,9 +56,10 @@ def upload_photo(id, photo):
 		# random filename so that if a user uploads images with same filenames, they won't be overwritten
 		new_filename = uuid.uuid4().hex + '.' + extension
 		photo.save(os.path.join(config['UPLOAD_FOLDER'], new_filename))
-		# get thumbnail link
-		thumbnail_link = convert_to_thumbnail(new_filename)
+		# process the image and return the filename
 		processed_link = yolo_object_detection(config['UPLOAD_FOLDER'], new_filename, config['UPLOAD_FOLDER'])
+		# get thumbnail of the processed image
+		thumbnail_link = convert_to_thumbnail(processed_link)
 		# create new database record
 		photo = Photo(
 			user_id=id,

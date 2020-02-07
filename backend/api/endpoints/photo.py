@@ -49,6 +49,8 @@ class ThumbnailLink(Resource):
         Return the thumbnail photo corresponding to photo_id as a file object 
         """
         photo = Photo.query.get(photo_id)
+        if photo.user_id != get_jwt_identity():
+            abort(401, 'Authentication failed!')
         path = os.path.join(config['UPLOAD_FOLDER'], photo.thumbnail_link)
         return send_file(path, as_attachment=True)
 
@@ -60,6 +62,8 @@ class OriginalLink(Resource):
         Return the original photo corresponding to photo_id as a file object 
         """
         photo = Photo.query.get(photo_id)
+        if photo.user_id != get_jwt_identity():
+            abort(401, 'Authentication failed!')
         path = os.path.join(config['UPLOAD_FOLDER'], photo.photo_link)
         return send_file(path, as_attachment=True)
 
@@ -71,6 +75,8 @@ class ProcessedLink(Resource):
         Return the processed photo corresponding to photo_id as a file object 
         """
         photo = Photo.query.get(photo_id)
+        if photo.user_id != get_jwt_identity():
+            abort(401, 'Authentication failed!')
         path = os.path.join(config['UPLOAD_FOLDER'], photo.processed_link)
         return send_file(path, as_attachment=True)
         
