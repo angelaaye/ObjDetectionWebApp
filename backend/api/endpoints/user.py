@@ -9,6 +9,8 @@ from api.serializers import user_json
 from flask_jwt_extended import create_access_token, create_refresh_token, set_access_cookies, \
     set_refresh_cookies, unset_jwt_cookies, get_jwt_identity, jwt_refresh_token_required
 
+import datetime
+
 ns = api.namespace('user', description='APIs related to ECE1779A1 user login/registration')
 
 @ns.route('/register')
@@ -48,8 +50,8 @@ class Login(Resource):
                 'access_token': access_token,
                 'refresh_token': refresh_token
             })
-            set_access_cookies(resp, access_token)
-            set_refresh_cookies(resp, refresh_token)        
+            set_access_cookies(resp, access_token, max_age=86400)
+            set_refresh_cookies(resp, refresh_token, max_age=86400)
             return resp
         else:
             abort(401, 'Invalid credentials')
@@ -78,5 +80,5 @@ class AuthTokenRefresh(Resource):
         resp = jsonify({
             'refresh': True,
             'access_token': access_token})
-        set_access_cookies(resp, access_token)
+        set_access_cookies(resp, access_token, max_age=86400)
         return resp

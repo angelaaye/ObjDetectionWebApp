@@ -2,7 +2,7 @@
 # https://github.com/postrational/rest_api_demo/blob/master/rest_api_demo/api/blog/endpoints/posts.py
 
 import os
-from flask import Flask, Blueprint
+from flask import Flask, Blueprint, send_file
 from config import config
 from api.endpoints.user import ns as user_namespace
 from api.endpoints.photo import ns as photo_namespace
@@ -14,7 +14,7 @@ from flask_migrate import Migrate
 
 def create_app():
     # Initialize and configure flask app
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder='../frontend/opencv-app/dist/')
     app.config.update(config)
 
     # Initilize database and migrations
@@ -30,6 +30,11 @@ def create_app():
 
     # Initialize JWT module
     JWTManager(app)
+
+    @app.route('/')
+    def index_client():
+        entry = os.path.join('../frontend/opencv-app/dist', 'index.html')
+        return send_file(entry)
 
     return app
 
