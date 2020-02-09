@@ -75,7 +75,7 @@ export default {
       let _this = this;
       axios({
               method: 'GET',
-              url: "http://localhost:5000/api/user/logout",
+              url: "/api/user/logout",
               withCredentials: true
             })
             .then((response) => {

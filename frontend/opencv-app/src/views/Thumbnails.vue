@@ -100,7 +100,7 @@ export default {
           this.$message.info("Use buttons on the sides to toggle between processed and original images.");
         },
         genSrcLink(type, id) {
-            return 'http://localhost:5000/api/photo/' + type + '/' + id;
+            return '/api/photo/' + type + '/' + id;
         },
         closeViewer() {
           this.showViewer = false;
