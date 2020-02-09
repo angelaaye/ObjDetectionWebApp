@@ -69,7 +69,6 @@
       },
       handleAvatarError(err) {
         this.$message.error("Error");
-        window.console.log(err);
       },
       beforeAvatarUpload(file) {
         const isJPG = file.type === 'image/jpeg';

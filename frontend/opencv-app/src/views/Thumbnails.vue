@@ -82,7 +82,6 @@ export default {
             })
             .catch((error) => {
                 this.$message.error("Loading image list failed, error code: " + error.status);
-                window.console.log(error);
             })
    },
    data() {

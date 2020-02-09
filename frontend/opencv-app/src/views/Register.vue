@@ -82,14 +82,11 @@
                   _this.$router.push('/login');
                 }, 1000);
               }
-              window.console.log(response);
             })
             .catch((error) => {
               if (error.response.status == 401) {
                 this.$message.error("Error: Username already taken!");
               }
-              
-              window.console.log(error);
             })
           } else {
             this.$message.error("Error! Please validate your input!");

@@ -86,10 +86,9 @@ export default {
                   _this.$router.push('/');
                 }
               }
-              window.console.log(response);
             })
             .catch((error) => {
-              window.console.log(error);
+              this.$message.error("Error: code " + error.response.status);
             })
     }
   }
