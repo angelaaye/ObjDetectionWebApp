@@ -70,7 +70,7 @@ export default {
 
         axios({
                 method: 'GET',
-                url: "http://localhost:5000/api/photo/",
+                url: "/api/photo/",
                 withCredentials: true
             })
             .then((response) => {

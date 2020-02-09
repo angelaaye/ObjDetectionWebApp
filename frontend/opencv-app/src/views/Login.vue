@@ -63,7 +63,7 @@
 
             axios({
               method: 'POST',
-              url: "http://localhost:5000/api/user/login",
+              url: "/api/user/login",
               data: formData,
               headers: {'Content-Type': 'application/x-www-form-urlencoded'},
               withCredentials: true

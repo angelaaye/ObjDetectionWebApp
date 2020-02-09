@@ -71,7 +71,7 @@
 
             axios({
               method: 'POST',
-              url: "http://localhost:5000/api/user/register",
+              url: "/api/user/register",
               data: formData,
               headers: {'Content-Type': 'multipart/form-data'}
             })

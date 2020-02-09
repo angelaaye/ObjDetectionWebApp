@@ -10,7 +10,6 @@ import locale from 'element-ui/lib/locale/lang/en';
 // Axios for sending requests
 import axios from 'axios';
 import VueAxios from 'vue-axios';
-
 import VueCookie from 'vue-cookie';
 
 import '@/assets/global.css'

@@ -3,7 +3,7 @@
     <el-upload
     v-loading="isUploading"
     class="avatar-uploader"
-    action="http://localhost:5000/api/photo/"
+    action="/api/photo/"
     name="photo"
     with-credentials
     :headers="{'X-CSRF-TOKEN': csrf_access_token}"
