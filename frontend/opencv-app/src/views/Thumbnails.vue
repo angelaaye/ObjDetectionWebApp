@@ -3,6 +3,7 @@
     <el-page-header id="pageheader" @back="$router.go(-1)" content="View Results">
     </el-page-header>
     <el-row v-loading="isLoading">
+    <p align="left">Click on the thumbnail to view the results.</p>
     <div class="waterfalls">
         <EIImageViewer ref="imgviewer"
                 v-if="showViewer" 
@@ -61,6 +62,12 @@ export default {
    props: [],
    mounted() {
         var _this = this;
+        if (!_this.LOGINSTATUS.hasLoggedIn) {
+            _this.$message.error("Unauthorized access, please log in first.");
+            _this.$router.push("/login");
+            return;
+        }
+
         axios({
                 method: 'GET',
                 url: "http://localhost:5000/api/photo/",

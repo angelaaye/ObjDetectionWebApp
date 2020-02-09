@@ -23,7 +23,7 @@
     data() {
        var validateName = (rule, value, callback) => {
         if (value === '') {
-          callback(new Error('Please enter unsername.'));
+          callback(new Error('Please enter username.'));
         } else {
           callback();
         }
@@ -54,6 +54,7 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
+            let _this = this;
            // Valid front-end data
             let formData = new FormData();
             formData.set('id', -1);
@@ -69,24 +70,25 @@
             })
             .then((response) => {
               if (response.status == 200) {
-                this.$message.success("Login successfully! We'll take you to home page in 1s.");
+                this.$message.success("Login successfully! We're now taking you to home page.");
 
                 // Set global variables and save to cookies
                 this.LOGINSTATUS.hasLoggedIn = true;
 
-                setTimeout(function() {window.location.href = "/"}, 1000);
+                setTimeout(function() {
+                  _this.$router.push('/');
+                }, 200);
               }
-              window.console.log(response);
             })
             .catch((error) => {
               if (error.response.status == 401) {
                 this.$message.error("Error: Invalid username or password!");
+              } else if (error.response.status == 500) {
+                this.$message.error("Error: Server error!");
               }
               
-              window.console.log(error);
             })
           } else {
-            window.console.log('error submit!!');
             return false;
           }
         });

@@ -24,7 +24,9 @@
     data() {
        var validateName = (rule, value, callback) => {
         if (value === '') {
-          callback(new Error('Please enter unsername.'));
+          callback(new Error('Please enter username.'));
+        } else if (value.length > 20) {
+          callback(new Error('Username longer than 20 characters.'));
         } else {
           callback();
         }
@@ -32,7 +34,12 @@
        var validatePass = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('Please enter password.'));
-        } else {
+        } else if (value.length > 20) {
+          callback(new Error('Password too long, restrict to between 4 and 20 characters or less.'));
+        } else if (value.length < 4) {
+          callback(new Error('Password too weak, restrict to between 4 and 20 characters or less.'));
+        }
+        else {
           callback();
         }
       };
@@ -53,6 +60,7 @@
     },
     methods: {
       submitForm(formName) {
+        let _this = this;
         this.$refs[formName].validate((valid) => {
           if (valid) {
             // Valid front-end data
@@ -69,16 +77,22 @@
             })
             .then((response) => {
               if (response.status == 200) {
-                this.$message.success("Register success!");
+                this.$message.success("Register success! You can login now.");
+                setTimeout(function() {
+                  _this.$router.push('/login');
+                }, 1000);
               }
               window.console.log(response);
             })
             .catch((error) => {
-              this.$message.error("Error: " + error.status);
+              if (error.response.status == 401) {
+                this.$message.error("Error: Username already taken!");
+              }
+              
               window.console.log(error);
             })
           } else {
-            this.$message.success("Error! Please validate your input!");
+            this.$message.error("Error! Please validate your input!");
             return false;
           }
         });

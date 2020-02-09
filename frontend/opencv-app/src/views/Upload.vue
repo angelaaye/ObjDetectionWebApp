@@ -3,7 +3,6 @@
     <el-page-header id="pageheader" @back="$router.go(-1)" content="Upload Image">
     </el-page-header>
     <ImageUpload id="imageuploader" />
-        <p> Click "+" to choose an image.</p>
   </div>
 </template>
 
@@ -15,6 +14,14 @@ export default {
   name: 'upload',
   components: {
     ImageUpload
+   },
+   mounted() {
+      var _this = this;
+      if (!_this.LOGINSTATUS.hasLoggedIn) {
+          _this.$message.error("Unauthorized access, please log in first.");
+          _this.$router.push("/login");
+          return;
+      }
    }
 }
 </script>
@@ -26,7 +33,7 @@ export default {
 
 .uploaddiv {
   padding: 1rem;
-  max-width: 35rem;
+  min-width: 35rem;
   margin: auto;
 }
 

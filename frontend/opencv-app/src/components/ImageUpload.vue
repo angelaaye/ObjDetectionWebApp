@@ -15,6 +15,9 @@
     <img v-if="imageUrl" :src="imageUrl" class="avatar">
     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
     </el-upload>
+    <p v-if="!this.imageUrl">Click "+" to upload an image.</p>
+    <p v-if="this.imageUrl">Click the above area to upload another image.</p>
+
 </div>
 </template>
 
@@ -40,6 +43,8 @@
   .avatar {
     min-width: 178px;
     min-height: 178px;
+    max-width: 90vw;
+    max-height: 90vh;
     display: block;
   }
 </style>

@@ -9,7 +9,7 @@
   <el-row>
     <el-col :xs={span:18} :sm={span:18} :md={span:4} :lg={span:2}>
       <el-row type="flex">
-        <el-menu-item index="/">OpenCV App Home</el-menu-item>
+        <el-menu-item index="/">スマ写真  Home</el-menu-item>
       </el-row>
     </el-col>
 
@@ -73,6 +73,7 @@ export default {
     },
 
     onSignOut: function () {
+      let _this = this;
       axios({
               method: 'GET',
               url: "http://localhost:5000/api/user/logout",
@@ -82,8 +83,9 @@ export default {
               if (response.status == 200) {
                 this.$message.success("Log out successfully.");
                 this.LOGINSTATUS.hasLoggedIn = false;
-
-                setTimeout(function() {window.location.href = "/"}, 1000);
+                if (_this.$router.currentRoute.path !== '/') {
+                  _this.$router.push('/');
+                }
               }
               window.console.log(response);
             })

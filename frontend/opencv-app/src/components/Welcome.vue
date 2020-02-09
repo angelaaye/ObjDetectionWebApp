@@ -1,6 +1,6 @@
 <template>
 <div id="welcomediv">
-    <h1>OpenCV App</h1>
+    <h1>ECE1779 Assignment 1</h1>
 
     <br>
 
@@ -15,8 +15,8 @@
     </p>
     <br>
 
-    <el-button type="primary" v-if="loggedin" @click="$router.push('login')">Upload</el-button>
-    <el-button v-if="loggedin" @click="$router.push('login')">Results</el-button>
+    <el-button type="primary" v-if="loggedin" @click="$router.push('upload')">Upload</el-button>
+    <el-button v-if="loggedin" @click="$router.push('result')">Results</el-button>
     <el-button type="primary" v-if="!loggedin" @click="$router.push('login')">Log In</el-button>
     <el-button v-if="!loggedin" @click="$router.push('register')">Register</el-button>
 
