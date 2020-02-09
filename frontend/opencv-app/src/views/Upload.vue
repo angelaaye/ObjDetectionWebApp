@@ -33,7 +33,6 @@ export default {
 
 .uploaddiv {
   padding: 1rem;
-  min-width: 35rem;
   margin: auto;
 }
 

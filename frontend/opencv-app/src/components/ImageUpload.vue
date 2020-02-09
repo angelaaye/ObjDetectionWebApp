@@ -68,7 +68,7 @@
         this.$message.success('Picture uploaded and processed successfully!');
       },
       handleAvatarError(err) {
-        this.$message.error("Error");
+        this.$message.error("Error" + err.response.status);
       },
       beforeAvatarUpload(file) {
         const isJPG = file.type === 'image/jpeg';
