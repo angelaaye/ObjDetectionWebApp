@@ -74,13 +74,13 @@
         const isJPG = file.type === 'image/jpeg';
         const isPNG = file.type === 'image/png';
 
-        const isLt2M = file.size / 1024 / 1024 < 2;
+        const isLt2M = file.size / 1024 / 1024 < 10;
 
         if (!isJPG && !isPNG) {
           this.$message.error('Can only upload jpg or png files!');
         }
         if (!isLt2M) {
-          this.$message.error('Cannot upload image more than 2MB!');
+          this.$message.error('Cannot upload image more than 10 MB!');
         }
 
         return (isJPG || isPNG) && isLt2M;
