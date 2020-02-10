@@ -31,6 +31,7 @@ def create_app():
     # Initialize JWT module
     JWTManager(app)
 
+    # Send frontend page
     @app.route('/')
     def index_client():
         entry = os.path.join('../frontend/opencv-app/dist', 'index.html')

@@ -32,7 +32,7 @@ class Register(Resource):
             abort(401, 'Password too weak. Please enter a password of at least 4 characters.')
         user = create_account(username=username, password=password)
         if user:     
-            return user
+            return user, 200
         else:
             abort(401, 'Username taken')
 
@@ -52,13 +52,11 @@ class Login(Resource):
             refresh_token = create_refresh_token(identity=user.id)
             # Set the JWT cookies in the response
             resp = jsonify({
-                'login': True,
-                'access_token': access_token,
-                'refresh_token': refresh_token
+                'login': True
             })
             set_access_cookies(resp, access_token, max_age=86400)
             set_refresh_cookies(resp, refresh_token, max_age=86400)
-            return resp
+            return resp, 200
         else:
             abort(401, 'Invalid credentials')
 
@@ -70,7 +68,7 @@ class Logout(Resource):
         """
         resp = jsonify({'logout': True})
         unset_jwt_cookies(resp)
-        return resp
+        return resp, 200
 
 @ns.route('/refresh-token')
 class AuthTokenRefresh(Resource):
@@ -83,7 +81,7 @@ class AuthTokenRefresh(Resource):
         access_token = create_access_token(identity = current_user)
         # Set the JWT access cookie in the response
         resp = jsonify({
-            'refresh': True,
-            'access_token': access_token})
+            'refresh': True
+        })
         set_access_cookies(resp, access_token, max_age=86400)
-        return resp
+        return resp, 200

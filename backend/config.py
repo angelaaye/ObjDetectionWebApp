@@ -7,8 +7,6 @@ ENV = 'local' if not 'ENV' in os.environ else os.environ['ENV']
 
 if ENV == 'production':
     load_dotenv('.env.production')
-elif ENV == 'development':
-    load_dotenv('.env.development')
 elif ENV == 'local':
     load_dotenv('.env.local')
 
@@ -34,8 +32,7 @@ config['RESTPLUS_ERROR_404_HELP'] = False
 # Refer to: https://flask-jwt-extended.readthedocs.io/en/latest/options.html
 config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
 config['JWT_TOKEN_LOCATION'] = ['cookies']
-# Time in seconds
-config['JWT_ACCESS_TOKEN_EXPIRES'] = 86400 
+config['JWT_ACCESS_TOKEN_EXPIRES'] = 86400 # Time in seconds
 
 # SQLAlchemy settings
 config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
