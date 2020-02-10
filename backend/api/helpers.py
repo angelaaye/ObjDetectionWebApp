@@ -43,7 +43,7 @@ def create_account(username, password):
 def convert_to_thumbnail(filename):
 	im = Image.open(os.path.join(config['UPLOAD_FOLDER'], filename))
 	# convert to thumbnail image
-	im.thumbnail(128, 128)
+	im.thumbnail((128, 128))
 	# prefix thumbnail file with T_
 	thumbnail_link = "T_" + filename
 	im.save(os.path.join(config['UPLOAD_FOLDER'], thumbnail_link))
