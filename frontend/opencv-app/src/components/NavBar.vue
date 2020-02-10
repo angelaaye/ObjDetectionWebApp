@@ -7,13 +7,13 @@
   text-color="#fff"
   active-text-color="#fff" router>
   <el-row>
-    <el-col :xs={span:18} :sm={span:18} :md={span:4} :lg={span:2}>
+    <el-col :xs={span:18} :sm={span:18} :md={span:4} :lg={span:4}>
       <el-row type="flex">
         <el-menu-item index="/">スマ写真  Home</el-menu-item>
       </el-row>
     </el-col>
 
-    <el-col :xs={span:6} :sm={span:6} :md={span:20} :lg={span:22}>
+    <el-col :xs={span:6} :sm={span:6} :md={span:20} :lg={span:20}>
       <el-row class="hidden-md-and-up">
         <el-submenu index="/">
           <template slot="title"><i class="el-icon-menu"></i></template>
@@ -32,8 +32,8 @@
           </el-row>
         </el-col>
 
-        <el-col :md={span:5} :lg={span:3}>
-          <el-row type="flex" justify="space-between">
+        <el-col :md={span:6} :lg={span:4}>
+          <el-row type="flex" style="justify-content:flex-end;">
             <el-menu-item v-if="!loggedin" index="/login">Log In</el-menu-item>
             <el-menu-item v-if="!loggedin" index="/register">Register</el-menu-item>
             <el-menu-item v-if="loggedin" @click="onSignOut()">Sign Out</el-menu-item>
