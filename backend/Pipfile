@@ -17,6 +17,7 @@ pillow = "*"
 flask-jwt-extended = "*"
 flask-migrate = "*"
 mysqlclient = "*"
+werkzeug = "==0.16.1"
 
 [requires]
 python_version = "3.7"

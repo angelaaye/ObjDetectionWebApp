@@ -42,4 +42,4 @@ config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
 config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 config['UPLOAD_FOLDER'] = 'uploads'
-config['MAX_CONTENT_LENGTH'] = 2 * 1024 * 1024
+config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024 # max 10MB file size
