@@ -41,6 +41,7 @@ def create_app():
 
     return app
 
+
 app = create_app()
 # app.run(debug=config['FLASK_DEBUG'], host=config['FLASK_HOST'],
 #             port=config['FLASK_PORT'])
