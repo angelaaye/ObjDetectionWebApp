@@ -6,6 +6,7 @@ from flask import Flask, Blueprint, send_file
 from config import config
 from api.endpoints.user import ns as user_namespace
 from api.endpoints.photo import ns as photo_namespace
+from api.endpoints.ta import ns as ta_namespace
 from api.restplus import api
 from database import db
 from flask_jwt_extended import JWTManager
@@ -26,6 +27,7 @@ def create_app():
     api.init_app(blueprint)
     api.add_namespace(user_namespace)
     api.add_namespace(photo_namespace)
+    api.add_namespace(ta_namespace)
     app.register_blueprint(blueprint)
 
     # Initialize JWT module

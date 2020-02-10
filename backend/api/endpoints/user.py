@@ -34,7 +34,7 @@ class Register(Resource):
         if user:     
             return user, 200
         else:
-            abort(401, 'Username taken')
+            abort(401, 'Username taken.')
 
 @ns.route('/login')
 class Login(Resource):
@@ -58,7 +58,7 @@ class Login(Resource):
             set_refresh_cookies(resp, refresh_token, max_age=86400)
             return resp, 200
         else:
-            abort(401, 'Invalid credentials')
+            abort(401, 'Invalid credentials.')
 
 @ns.route('/logout')
 class Logout(Resource):

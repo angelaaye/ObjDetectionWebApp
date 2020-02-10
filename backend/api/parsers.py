@@ -16,3 +16,8 @@ photo_upload.add_argument('photo', type=FileStorage, location='files', required=
 
 photo_info = reqparse.RequestParser(bundle_errors=True)
 photo_info.add_argument('photo_id', type=int, required=True, help='Photo ID')
+
+ta_photo_upload = reqparse.RequestParser(bundle_errors=True)
+ta_photo_upload.add_argument('username', type=str, required=True, help='Username')
+ta_photo_upload.add_argument('password', type=str, required=True, help='Password')
+ta_photo_upload.add_argument('photo', type=FileStorage, location='files', required=True, help='Uploaded photo')
