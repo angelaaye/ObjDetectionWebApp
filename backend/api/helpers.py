@@ -17,7 +17,6 @@ from config import config
 from api.yolo import yolo_object_detection
 
 def authenticate_user(username, password):
-    print("Querying user tied to username and password")
     user = User.query.filter_by(username=username).first()
     if user and pbkdf2_sha256.verify(password, user.password):
         return user
@@ -75,7 +74,6 @@ def upload_photo(id, photo):
 
 
 def auth_photo_link(user, photo, photo_type):
-	print(user, photo)
 	mapping = {'T': photo.thumbnail_link, 'O': photo.photo_link, 'P': photo.processed_link}
 	if user == photo.user_id:
 		return os.path.join(config['UPLOAD_FOLDER'], mapping[photo_type])

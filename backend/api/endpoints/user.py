@@ -80,7 +80,6 @@ class AuthTokenRefresh(Resource):
         Generate a new access token from a refresh token
         """        
         current_user = get_jwt_identity()
-        print(current_user)
         access_token = create_access_token(identity = current_user)
         # Set the JWT access cookie in the response
         resp = jsonify({

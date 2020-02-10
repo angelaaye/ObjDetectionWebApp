@@ -24,7 +24,7 @@ def yolo_object_detection(input_dir, filename, output_dir):
 	configPath = os.path.sep.join([yolo_dir, "yolov3.cfg"])
 
 	# load our YOLO object detector trained on COCO dataset (80 classes)
-	print("[INFO] loading YOLO from disk...")
+	# print("[INFO] loading YOLO from disk...")
 	net = cv2.dnn.readNetFromDarknet(configPath, weightsPath)
 
 	# load our input image and grab its spatial dimensions
@@ -47,7 +47,7 @@ def yolo_object_detection(input_dir, filename, output_dir):
 	end = time.time()
 
 	# show timing information on YOLO
-	print("[INFO] YOLO took {:.6f} seconds".format(end - start))
+	# print("[INFO] YOLO took {:.6f} seconds".format(end - start))
 
 	# initialize our lists of detected bounding boxes, confidences, and
 	# class IDs, respectively
