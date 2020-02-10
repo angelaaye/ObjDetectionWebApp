@@ -32,12 +32,9 @@ def create_account(username, password):
 	"""
 	user = User.query.filter_by(username=username).first()
 	if not user:  # username not taken
-		last_user = User.query.order_by(User.id.desc()).first()
-		# get a different salt for every unique user
-		salt = last_user.id + 1 if last_user else 1
 		user = User(
 			username=username,
-			password=pbkdf2_sha256.using(salt=bytes(salt), salt_size=16).hash(password)
+			password=pbkdf2_sha256.hash(password)
 		)
 		db.session.add(user)
 		db.session.commit()

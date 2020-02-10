@@ -51,10 +51,10 @@ class Upload(Resource):
         if not user:
             abort(401, 'Invalid credentials.')
 
-        if not args['photo'].filename:
+        if not args['file'].filename:
             abort(401, 'No image selected')
         
-        photo = upload_photo(user.id, args['photo'])
+        photo = upload_photo(user.id, args['file'])
         if not photo:
             abort(401, 'Wrong file type. JPEG/JPG/PNG only!')
 
