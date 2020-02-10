@@ -24,10 +24,12 @@ class Register(Resource):
         args = user_info.parse_args(request)
         username = args['username']
         password = args['password']
+        if len(username) > 20:
+            abort(401, 'Username too long. Please enter a username less than 20 characters.')
         if len(password) > 20:
             abort(401, 'Password too long. Please enter a password less than 20 characters.')
-        if len(password) < 6:
-            abort(401, 'Password too weak. Please enter a password of at least 6 characters.')
+        if len(password) < 4:
+            abort(401, 'Password too weak. Please enter a password of at least 4 characters.')
         user = create_account(username=username, password=password)
         if user:     
             return user
