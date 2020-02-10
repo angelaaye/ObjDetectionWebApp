@@ -50,7 +50,7 @@ class ThumbnailLink(Resource):
         """
         photo = Photo.query.get(photo_id)
         path = auth_photo_link(get_jwt_identity(), photo, 'T')
-        return send_file(path, as_attachment=True), 200
+        return send_file(path, as_attachment=True)
 
 @ns.route('/original/<int:photo_id>')
 class OriginalLink(Resource):
@@ -61,7 +61,7 @@ class OriginalLink(Resource):
         """
         photo = Photo.query.get(photo_id)
         path = auth_photo_link(get_jwt_identity(), photo, 'O')
-        return send_file(path, as_attachment=True), 200
+        return send_file(path, as_attachment=True)
 
 @ns.route('/processed/<int:photo_id>')
 class ProcessedLink(Resource):
@@ -72,7 +72,7 @@ class ProcessedLink(Resource):
         """
         photo = Photo.query.get(photo_id)
         path = auth_photo_link(get_jwt_identity(), photo, 'P')
-        return send_file(path, as_attachment=True), 200
+        return send_file(path, as_attachment=True)
         
         
 

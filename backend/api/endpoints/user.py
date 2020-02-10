@@ -56,7 +56,7 @@ class Login(Resource):
             })
             set_access_cookies(resp, access_token, max_age=86400)
             set_refresh_cookies(resp, refresh_token, max_age=86400)
-            return resp, 200
+            return resp
         else:
             abort(401, 'Invalid credentials.')
 
@@ -68,7 +68,7 @@ class Logout(Resource):
         """
         resp = jsonify({'logout': True})
         unset_jwt_cookies(resp)
-        return resp, 200
+        return resp
 
 @ns.route('/refresh-token')
 class AuthTokenRefresh(Resource):
@@ -84,4 +84,4 @@ class AuthTokenRefresh(Resource):
             'refresh': True
         })
         set_access_cookies(resp, access_token, max_age=86400)
-        return resp, 200
+        return resp

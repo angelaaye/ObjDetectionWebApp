@@ -32,14 +32,13 @@ class Register(Resource):
         user = create_account(username=username, password=password)
         if user:
             resp = jsonify({'registered': True})
-            return resp, 201
+            return resp
         else:
             abort(401, 'Username taken.')
 
 @ns.route('/upload')
 class Upload(Resource):
     @api.expect(ta_photo_upload)
-    @api.marshal_with(photo_json)
     def post(self):
         """
         Upload a new photo and create thumbnail and processed versions.
@@ -60,4 +59,4 @@ class Upload(Resource):
             abort(401, 'Wrong file type. JPEG/JPG/PNG only!')
 
         resp = jsonify({'uploaded': True})
-        return resp, 200
+        return resp
