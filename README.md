@@ -6,6 +6,18 @@
 
 - SSH into EC2 and run ./start.sh under home directory. Nginx and Gunicorn will automatically serve the app on port 80 and 5000.
 
+```
+./start.sh
+```
+
+- Use the following command to run gen.py
+
+```
+python3.7 gen.py [parameters]
+```
+
+
+
 # General Architecture
 
 ## Specifications
