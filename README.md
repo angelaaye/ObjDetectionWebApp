@@ -1,21 +1,6 @@
-# ECE1779 Assignment 1 Documentation
+# Web Application Documentation
 
 # General Architecture
-
-## How to Use the Web Application
-
-- Start the EC2 instance on AWS Educate (under angela.ye@mail.utoronto.ca account).
-- SSH into EC2 and run ./start.sh under home directory. Nginx and Gunicorn will automatically serve the app on port 80 and 5000.
-
-```
-./start.sh
-```
-
-- Use the following command to run gen.py
-
-```
-python3.7 gen.py [parameters]
-```
 
 ## Specifications
 There are some assumptions we made in our web application. Firstly, all usernames are case insensitive. For example, `SpIdErMaN` and `spiderman` refer to the same username and can be used to log into the same account. Next, we assume that the username and the password both cap at 20 characters long. However, the password has to be at least 4 characters while the username can be as short as 1 character. We also limited the type of images a user can upload to JPG, JPEG and PNGs only. The maximum file size is set at 10 MB. 
