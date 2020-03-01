@@ -1,6 +1,6 @@
 # Web Application Documentation
 
-# General Architecture
+This web application allows users to register an account, log in to the account, and upload photos into their account. After a photo is uploaded, it is sent to a YOLOv3 model trained on COCO to perform object detection. The original photo and the processed photo are both displayed on the user's dashboard.
 
 ## Specifications
 There are some assumptions we made in our web application. Firstly, all usernames are case insensitive. For example, `SpIdErMaN` and `spiderman` refer to the same username and can be used to log into the same account. Next, we assume that the username and the password both cap at 20 characters long. However, the password has to be at least 4 characters while the username can be as short as 1 character. We also limited the type of images a user can upload to JPG, JPEG and PNGs only. The maximum file size is set at 10 MB. 
